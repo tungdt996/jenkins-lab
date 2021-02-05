@@ -1,15 +1,20 @@
 // @ts-nocheck
-import { createBrowserHistory, History } from '/home/quang/Home/work/react_base/node_modules/umi/node_modules/@umijs/runtime';
+import {
+  createBrowserHistory,
+  History,
+} from '/home/quang/Home/work/react_base/ReactBase/node_modules/umi/node_modules/@umijs/runtime';
 
 let options = {
-  "basename": "/"
+  basename: '/',
 };
 if ((<any>window).routerBase) {
   options.basename = (<any>window).routerBase;
 }
 
 // remove initial history because of ssr
-let history: History = process.env.__IS_SERVER ? null : createBrowserHistory(options);
+let history: History = process.env.__IS_SERVER
+  ? null
+  : createBrowserHistory(options);
 export const createHistory = (hotReload = false) => {
   if (!hotReload) {
     history = createBrowserHistory(options);

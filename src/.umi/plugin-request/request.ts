@@ -1,6 +1,6 @@
 // @ts-nocheck
 /**
- * Base on https://github.com/umijs//home/quang/Home/work/react_base/node_modules/umi-request
+ * Base on https://github.com/umijs//home/quang/Home/work/react_base/ReactBase/node_modules/umi-request
  */
 import {
   extend,
@@ -13,16 +13,18 @@ import {
   RequestResponse,
   RequestInterceptor,
   ResponseInterceptor,
-} from '/home/quang/Home/work/react_base/node_modules/umi-request';
+} from '/home/quang/Home/work/react_base/ReactBase/node_modules/umi-request';
 // @ts-ignore
 
 import { ApplyPluginsType } from 'umi';
 import { history, plugin } from '../core/umiExports';
-            
+
 // decoupling with antd UI library, you can using `alias` modify the ui methods
 // @ts-ignore
 import { message, notification } from '@umijs/plugin-request/lib/ui';
-import useUmiRequest, { UseRequestProvider } from '/home/quang/Home/work/react_base/node_modules/@ahooksjs/use-request';
+import useUmiRequest, {
+  UseRequestProvider,
+} from '/home/quang/Home/work/react_base/ReactBase/node_modules/@ahooksjs/use-request';
 import {
   BaseOptions,
   BasePaginatedOptions,
@@ -38,7 +40,7 @@ import {
   PaginatedOptionsWithFormat,
   PaginatedParams,
   PaginatedResult,
-} from '/home/quang/Home/work/react_base/node_modules/@ahooksjs/use-request/lib/types';
+} from '/home/quang/Home/work/react_base/ReactBase/node_modules/@ahooksjs/use-request/lib/types';
 
 type ResultWithData<T = any> = { data?: T; [key: string]: any };
 
@@ -80,7 +82,7 @@ function useRequest<Item = any, U extends Item = any>(
 ): PaginatedResult<Item>;
 function useRequest(service: any, options: any = {}) {
   return useUmiRequest(service, {
-    formatResult: result => result?.data,
+    formatResult: (result) => result?.data,
     requestMethod: (requestOptions: any) => {
       if (typeof requestOptions === 'string') {
         return request(requestOptions);
@@ -149,7 +151,7 @@ const getRequestMethod = () => {
   });
 
   const errorAdaptor =
-    requestConfig.errorConfig?.adaptor || (resData => resData);
+    requestConfig.errorConfig?.adaptor || ((resData) => resData);
 
   requestMethodInstance = extend({
     errorHandler: (error: RequestError) => {
@@ -237,17 +239,17 @@ const getRequestMethod = () => {
 
   // Add user custom middlewares
   const customMiddlewares = requestConfig.middlewares || [];
-  customMiddlewares.forEach(mw => {
+  customMiddlewares.forEach((mw) => {
     requestMethodInstance.use(mw);
   });
 
   // Add user custom interceptors
   const requestInterceptors = requestConfig.requestInterceptors || [];
   const responseInterceptors = requestConfig.responseInterceptors || [];
-  requestInterceptors.map(ri => {
+  requestInterceptors.map((ri) => {
     requestMethodInstance.interceptors.request.use(ri);
   });
-  responseInterceptors.map(ri => {
+  responseInterceptors.map((ri) => {
     requestMethodInstance.interceptors.response.use(ri);
   });
 

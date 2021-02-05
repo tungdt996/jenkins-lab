@@ -1,17 +1,17 @@
 // @ts-nocheck
 import React from 'react';
-import { ApplyPluginsType } from '/home/quang/Home/work/react_base/node_modules/umi/node_modules/@umijs/runtime';
+import { ApplyPluginsType } from '/home/quang/Home/work/react_base/ReactBase/node_modules/umi/node_modules/@umijs/runtime';
 import * as umiExports from './umiExports';
 import { plugin } from './plugin';
 
 export function getRoutes() {
   const routes = [
-  {
-    "path": "/",
-    "component": require('@/pages/index').default,
-    "exact": true
-  }
-];
+    {
+      path: '/',
+      exact: true,
+      component: require('@/pages/index.tsx').default,
+    },
+  ];
 
   // allow user to extend routes
   plugin.applyPlugins({

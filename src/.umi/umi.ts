@@ -1,45 +1,41 @@
 // @ts-nocheck
 import './core/polyfill';
-
+import '@@/core/devScripts';
 import { plugin } from './core/plugin';
 import './core/pluginRegister';
 import { createHistory } from './core/history';
-import { ApplyPluginsType } from '/home/quang/Home/work/react_base/node_modules/umi/node_modules/@umijs/runtime';
-import { renderClient } from '/home/quang/Home/work/react_base/node_modules/umi/node_modules/@umijs/renderer-react/dist/index.js';
+import { ApplyPluginsType } from '/home/quang/Home/work/react_base/ReactBase/node_modules/umi/node_modules/@umijs/runtime';
+import { renderClient } from '/home/quang/Home/work/react_base/ReactBase/node_modules/umi/node_modules/@umijs/renderer-react/dist/index.js';
 import { getRoutes } from './core/routes';
 
-
-
-
-const getClientRender = (args: { hot?: boolean; routes?: any[] } = {}) => plugin.applyPlugins({
-  key: 'render',
-  type: ApplyPluginsType.compose,
-  initialValue: () => {
-    const opts = plugin.applyPlugins({
-      key: 'modifyClientRenderOpts',
-      type: ApplyPluginsType.modify,
-      initialValue: {
-        routes: args.routes || getRoutes(),
-        plugin,
-        history: createHistory(args.hot),
-        isServer: process.env.__IS_SERVER,
-        rootElement: 'root',
-        defaultTitle: ``,
-      },
-    });
-    return renderClient(opts);
-  },
-  args,
-});
+const getClientRender = (args: { hot?: boolean; routes?: any[] } = {}) =>
+  plugin.applyPlugins({
+    key: 'render',
+    type: ApplyPluginsType.compose,
+    initialValue: () => {
+      const opts = plugin.applyPlugins({
+        key: 'modifyClientRenderOpts',
+        type: ApplyPluginsType.modify,
+        initialValue: {
+          routes: args.routes || getRoutes(),
+          plugin,
+          history: createHistory(args.hot),
+          isServer: process.env.__IS_SERVER,
+          rootElement: 'root',
+          defaultTitle: ``,
+        },
+      });
+      return renderClient(opts);
+    },
+    args,
+  });
 
 const clientRender = getClientRender();
 export default clientRender();
 
-
-    window.g_umi = {
-      version: '3.3.7',
-    };
-  
+window.g_umi = {
+  version: '3.3.7',
+};
 
 // hot module replacement
 // @ts-ignore
